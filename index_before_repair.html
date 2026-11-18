@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura Jewels | Premium Jewelry Store</title>
+    <meta name="description" content="Aura Jewels is a premium jewelry shopping experience with trending collections, verified quality, and elegant styles tailored for weddings, gifting, and everyday luxury." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+      :root {
+        --bg: #fffaf7;
+        --surface: #ffffff;
+        --card: #fffdfd;
+        --text: #1d1d1f;
+        --muted: #68707d;
+        --gold: #d9a441;
+        --gold-deep: #b8821c;
+        --gold-soft: #fff1cf;
+        --pink: #ff4f92;
+        --pink-soft: #ffe5ef;
+        --dark: #111111;
+        --line: rgba(17, 17, 17, 0.08);
+        --shadow: 0 18px 36px rgba(17, 17, 17, 0.07);
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      a { text-decoration: none; color: inherit; }
+      img { display: block; width: 100%; }
+      button, input { font: inherit; }
+      .container { width: min(1200px, calc(100% - 32px)); margin: 0 auto; }
+      .eyebrow {
+        display: inline-block;
+        margin-bottom: 12px;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(217, 164, 65, 0.14);
+        color: var(--gold-deep);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.9);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(14px);
+      }
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 82px;
+      }
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+        color: white;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+      }
+      .brand-name {
+        display: block;
+        font-size: 1.15rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+      }
+      .brand-wrap small {
+        display: block;
+        color: var(--muted);
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        font-size: 0.6rem;
+      }
+      .main-nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .main-nav a {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--muted);
+        position: relative;
+      }
+      .main-nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 100%;
+        height: 2px;
+        background: var(--gold);
+        transform: scaleX(0);
+        transition: transform 0.2s ease;
+      }
+      .main-nav a:hover::after,
+      .main-nav a.active::after { transform: scaleX(1); }
+      .main-nav a:hover,
+      .main-nav a.active { color: var(--text); }
+      .search-box {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: 1;
+        max-width: 420px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        background: #f4f4f5;
+        border: 1px solid transparent;
+      }
+      .search-box:focus-within {
+        border-color: rgba(217, 164, 65, 0.4);
+        box-shadow: 0 0 0 4px rgba(217, 164, 65, 0.08);
+      }
+      .search-box i { color: var(--muted); }
+      .search-box input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        color: var(--text);
+        font-size: 0.95rem;
+      }
+      .search-box input::placeholder { color: #9aa2ad; }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .icon-btn,
+      .profile-pill {
+        border: 1px solid var(--line);
+        background: white;
+        color: var(--text);
+        border-radius: 12px;
+        padding: 9px 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .icon-btn i { font-size: 0.95rem; }
+      .count-pill {
+        display: inline-grid;
+        place-items: center;
+        min-width: 18px;
+        height: 18px;
+        padding: 0 6px;
+        border-radius: 12px;
+        background: var(--pink);
+        color: white;
+        font-size: 0.68rem;
+      }
+      .profile-pill { background: linear-gradient(135deg, #fff7ea, #fffdf6); }
+
+      .promo-strip {
+        background: linear-gradient(90deg, #fff6e9, #fff3ef, #fff9ef);
+        border-bottom: 1px solid rgba(217, 164, 65, 0.12);
+      }
+      .promo-strip-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        padding: 12px 0;
+        font-weight: 800;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--dark);
+      }
+
+      .hero {
+        padding: 46px 0 30px;
+      }
+      .hero-layout {
+        display: grid;
+        grid-template-columns: 1.08fr 1fr;
+        gap: 34px;
+        align-items: center;
+      }
+      .hero h1 {
+        max-width: 560px;
+        font-size: clamp(2.9rem, 5vw, 5.2rem);
+        line-height: 0.97;
+        letter-spacing: -0.08em;
+      }
+      .hero-copy p {
+        max-width: 560px;
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+      }
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 28px;
+      }
+      .primary-btn,
+      .secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px 28px;
+        border-radius: 14px;
+        font-weight: 800;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .primary-btn {
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+        color: white;
+        box-shadow: 0 18px 28px rgba(217, 164, 65, 0.28);
+      }
+      .secondary-btn {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+      .primary-btn:hover,
+      .secondary-btn:hover { transform: translateY(-2px); }
+      .hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        margin-top: 32px;
+      }
+      .hero-stats div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .hero-stats strong {
+        font-size: 1.7rem;
+        letter-spacing: -0.06em;
+      }
+      .hero-stats span { color: var(--muted); font-size: 0.85rem; }
+
+      .hero-visual {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 620px;
+      }
+      .hero-card {
+        position: relative;
+        width: min(100%, 540px);
+        height: 620px;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+      .hero-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .floating-note {
+        position: absolute;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(17, 17, 17, 0.04);
+        border-radius: 18px;
+        padding: 14px 16px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 18px 35px rgba(17, 17, 17, 0.12);
+      }
+      .floating-note i {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: #ecfff5;
+        color: #149d63;
+      }
+      .note-sale {
+        left: -10px;
+        bottom: 56px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .note-sale small {
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--gold-deep);
+        font-weight: 800;
+        font-size: 0.62rem;
+      }
+      .note-sale strong {
+        font-size: 2.1rem;
+        letter-spacing: -0.06em;
+      }
+      .note-badges {
+        right: -18px;
+        top: 18px;
+      }
+      .note-badges strong { display: block; font-size: 0.88rem; }
+      .note-badges small { color: var(--muted); }
+
+      .section-shell {
+        padding: 26px 0 48px;
+      }
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 22px;
+      }
+      .section-head h2 {
+        font-size: clamp(1.85rem, 3vw, 2.6rem);
+        letter-spacing: -0.06em;
+      }
+      .section-head a {
+        color: var(--gold-deep);
+        font-weight: 800;
+      }
+
+      
+.category-grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  position: relative;
+  width: 100%;
+  height: 270px;
+  min-height: 270px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.category-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+      .category-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.52));
+      }
+      .category-copy {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        bottom: 18px;
+        z-index: 1;
+        color: white;
+      }
+      .category-copy span {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+      .category-copy strong {
+        font-size: 1.6rem;
+        letter-spacing: -0.05em;
+      }
+
+      .banner-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr;
+        gap: 18px;
+      }
+      .promo-banner {
+        position: relative;
+        min-height: 220px;
+        border-radius: 28px;
+        overflow: hidden;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+        box-shadow: var(--shadow);
+      }
+      .promo-banner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(17,17,17,0.15);
+      }
+      .promo-banner > * { position: relative; z-index: 1; }
+      .promo-banner small { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .promo-banner h3 {
+        margin-top: 10px;
+        font-size: clamp(1.8rem, 2vw, 2.8rem);
+        letter-spacing: -0.06em;
+      }
+      .promo-banner button {
+        align-self: flex-start;
+        padding: 12px 18px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 800;
+        background: rgba(255,255,255,0.18);
+        color: white;
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+      }
+      .banner-1 { background: linear-gradient(135deg, #d68b5d, #ff5a6d); }
+      .banner-2 { background: linear-gradient(135deg, #7f8ef6, #5963d9); }
+      .banner-3 { background: linear-gradient(135deg, #f7bc61, #ea7d27); }
+
+      .filter-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+      .filter-chip {
+        padding: 8px 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: white;
+        color: var(--muted);
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .filter-chip.active {
+        background: rgba(217, 164, 65, 0.12);
+        color: var(--gold-deep);
+        border-color: rgba(217, 164, 65, 0.2);
+      }
+
+      .product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.product-card {
+  position: relative;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid rgba(17,17,17,0.04);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 22px rgba(17,17,17,0.05);
+}
+
+.product-card img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  object-position: center;
+}
+      .product-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        padding: 7px 10px;
+        border-radius: 99px;
+        background: rgba(255,255,255,0.88);
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: var(--text);
+      }
+      .wishlist-btn {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.9);
+        color: var(--text);
+        cursor: pointer;
+      }
+      .product-body {
+        padding: 16px 16px 18px;
+      }
+      .product-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .product-head h3 {
+        font-size: 1rem;
+        letter-spacing: -0.04em;
+      }
+      .product-brand {
+        margin-top: 8px;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .rating-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .rating-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #f6f7f9;
+        color: var(--text);
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+      .rating-chip i { color: #f7b500; }
+      .price-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .price { font-weight: 900; letter-spacing: -0.04em; }
+      .cut-price {
+        color: var(--muted);
+        text-decoration: line-through;
+        font-size: 0.8rem;
+      }
+      .discount {
+        color: var(--gold-deep);
+        font-weight: 800;
+        font-size: 0.76rem;
+      }
+      .cta-product {
+        width: 100%;
+        margin-top: 14px;
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: none;
+        background: var(--dark);
+        color: white;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .editorial-wrap {
+        padding-top: 8px;
+      }
+      .editorial-banner {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 26px;
+        background: linear-gradient(135deg, #fff3ed, #fff8ee);
+        border: 1px solid rgba(255,130,116,0.08);
+        border-radius: 34px;
+        padding: 24px;
+        box-shadow: var(--shadow);
+      }
+      .editorial-copy h2 {
+        font-size: clamp(2.2rem, 3vw, 3rem);
+        letter-spacing: -0.06em;
+      }
+      .editorial-copy p {
+        margin-top: 14px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .editorial-list {
+        display: grid;
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .mini-stat {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid rgba(17,17,17,0.04);
+        padding: 12px 14px;
+        border-radius: 14px;
+      }
+      .mini-stat i {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        background: #fff0d7;
+        color: var(--gold-deep);
+        border-radius: 12px;
+      }
+      .mini-stat strong { display: block; }
+      .mini-stat span { color: var(--muted); font-size: 0.82rem; }
+      .editorial-banner img {
+        height: 420px;
+        border-radius: 28px;
+        object-fit: cover;
+      }
+
+      .reliability-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+      .reliability-card {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        background: rgba(255,255,255,0.72);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        padding: 20px 18px;
+      }
+      .reliability-card i {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #fff6d8, #ffe8ea);
+        color: var(--gold-deep);
+        font-size: 1.25rem;
+      }
+      .reliability-card strong { display: block; }
+      .reliability-card span {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .brand-banner {
+        background: linear-gradient(135deg, #f9f8ff, #fff7eb);
+        border-radius: 28px;
+        border: 1px solid rgba(17,17,17,0.04);
+        padding: 26px 24px;
+      }
+      .brand-banner-row {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 18px;
+        align-items: center;
+      }
+      .brand-pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 86px;
+        background: white;
+        border: 1px solid rgba(17,17,17,0.04);
+        border-radius: 18px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .testimonial-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .testimonial-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 14px 30px rgba(17,17,17,0.05);
+        border: 1px solid rgba(17,17,17,0.03);
+      }
+      .stars { color: #f7b500; letter-spacing: 0.08em; }
+      .testimonial-card p {
+        color: var(--muted);
+        line-height: 1.8;
+        margin-top: 12px;
+      }
+      .testimonial-meta {
+        margin-top: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .testimonial-meta strong { font-size: 0.9rem; }
+      .testimonial-meta span { color: #9aa2ad; font-size: 0.8rem; }
+
+      .newsletter {
+        padding: 26px 0 54px;
+      }
+      .newsletter-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 32px 28px;
+        border-radius: 30px;
+        background: linear-gradient(135deg, #111111, #2d1d16);
+        color: white;
+      }
+      .newsletter-box h3 {
+        font-size: clamp(1.8rem, 3vw, 2.7rem);
+        letter-spacing: -0.06em;
+      }
+      .newsletter-box p {
+        margin-top: 8px;
+        color: rgba(255,255,255,0.75);
+      }
+      .newsletter-form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: min(100%, 480px);
+      }
+      .newsletter-form input {
+        flex: 1;
+        width: 100%;
+        padding: 16px 18px;
+        border-radius: 14px;
+        border: none;
+        outline: none;
+      }
+      .newsletter-form button {
+        padding: 16px 24px;
+        border-radius: 14px;
+        border: none;
+        background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+        color: white;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .site-footer {
+        background: #111111;
+        color: rgba(255,255,255,0.8);
+        padding: 42px 0 46px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+        gap: 20px;
+      }
+      .site-footer h4 {
+        color: white;
+        margin-bottom: 12px;
+        font-size: 1rem;
+      }
+      .site-footer p,
+      .site-footer li {
+        color: rgba(255,255,255,0.72);
+        line-height: 2;
+      }
+      .site-footer ul { list-style: none; }
+      .footer-socials {
+        display: flex;
+        gap: 12px;
+        font-size: 1.1rem;
+        margin-top: 12px;
+      }
+      .footer-socials i {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.08);
+      }
+
+      @media (max-width: 980px) {
+        .topbar-inner { flex-wrap: wrap; padding: 14px 0; }
+        .main-nav { order: 3; width: 100%; justify-content: center; }
+        .search-box { order: 4; width: 100%; max-width: none; }
+        .hero-layout,
+        .product-grid,
+        .category-grid,
+        .banner-grid,
+        .reliability-grid,
+        .testimonial-grid,
+        .footer-grid,
+        .brand-banner-row,
+        .editorial-banner {
+          grid-template-columns: 1fr 1fr;
+        }
+        .hero-layout,
+        .editorial-banner { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 640px) {
+        .header-actions { width: 100%; justify-content: center; }
+        .promo-strip-inner { gap: 10px 18px; font-size: 0.64rem; }
+        .hero h1 { font-size: 2.8rem; }
+        .cta-row { flex-direction: column; align-items: stretch; }
+        .primary-btn, .secondary-btn { width: 100%; }
+        .hero-stats { justify-content: space-between; }
+        .category-grid,
+        .banner-grid,
+        .product-grid,
+        .reliability-grid,
+        .testimonial-grid,
+        .footer-grid,
+        .brand-banner-row,
+        .newsletter-box,
+        .editorial-banner {
+          grid-template-columns: 1fr;
+        }
+        .section-head { align-items: flex-start; flex-direction: column; }
+        .hero-card { height: 440px; }
+        .floating-note { transform: scale(0.92); }
+        .note-sale { left: 8px; bottom: 18px; }
+        .note-badges { right: 10px; top: 16px; }
+        .newsletter-form { flex-direction: column; align-items: stretch; }
+        .newsletter-form button { width: 100%; }
+      }
+
+      .category-grid.all-categories { grid-template-columns: repeat(6, minmax(0,1fr)); gap:12px; }
+      .category-grid.all-categories .category-card { height:150px; min-height:150px; border:1px solid rgba(184,130,28,.18); background:linear-gradient(135deg,#fffaf0,#f5ead8); box-shadow:0 8px 22px rgba(40,28,12,.06); cursor:pointer; display:flex; align-items:center; justify-content:center; padding:14px; text-align:center; }
+      .category-grid.all-categories .category-card::after { display:none; }
+      .category-grid.all-categories .category-copy { position:static; color:#5b3b16; }
+      .category-grid.all-categories .category-copy span { color:#9b7b4d; opacity:1; font-size:.62rem; }
+      .category-grid.all-categories .category-copy strong { font-family:Georgia,serif; font-size:1rem; letter-spacing:0; }
+      .category-card[data-category]:hover { transform:translateY(-3px); border-color:var(--gold); }
+      .category-card { transition:transform .2s ease,border-color .2s ease; cursor:pointer; }
+      .filter-row { display:flex; flex-wrap:wrap; gap:8px; max-width:760px; }
+      .filter-chip { cursor:pointer; }
+      .product-card img { aspect-ratio: 1 / 1; object-fit:cover; background:#f5eee4; }
+#new-arrivals .product-card img {
+  display: block;
+  width: 100%;
+  height: 170px !important;
+  max-height: 170px !important;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}      .empty-results { grid-column:1/-1; padding:34px; text-align:center; color:var(--muted); background:#fff; border-radius:18px; }
+      .product-modal { display:none; position:fixed; inset:0; z-index:10000; background:rgba(20,15,10,.72); padding:24px; align-items:center; justify-content:center; }
+      .product-modal.open { display:flex; }
+      .product-modal-panel { width:min(850px,100%); max-height:90vh; overflow:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; background:#fffaf4; border-radius:22px; padding:22px; position:relative; }
+      .product-modal-panel img { width:100%; max-height:65vh; object-fit:contain; border-radius:14px; background:#f5eee4; cursor:zoom-in; }
+      .product-modal-panel img.zoomed { object-fit:contain; transform:scale(1.35); cursor:zoom-out; }
+      .modal-close { position:absolute; right:14px; top:10px; border:0; background:#fff; border-radius:50%; width:36px; height:36px; cursor:pointer; font-size:1.3rem; }
+      .modal-info { padding:30px 10px 10px; }
+      .modal-info h2 { font-family:Georgia,serif; margin-bottom:12px; }
+      .modal-info p { color:var(--muted); line-height:1.7; margin:12px 0; }
+      .category-grid:not(.all-categories) .category-card[data-category] { cursor:pointer; }
+      @media(max-width:900px){.category-grid.all-categories{grid-template-columns:repeat(3,minmax(0,1fr));}.topbar-inner{flex-wrap:wrap;padding:14px 0}.search-box{order:3;max-width:none;flex-basis:100%}}
+      @media(max-width:560px){.category-grid.all-categories{grid-template-columns:repeat(2,minmax(0,1fr));}.product-modal-panel{grid-template-columns:1fr}.modal-info{padding:8px}}
+
+
+      .category-grid.all-categories { grid-template-columns: repeat(6, minmax(0,1fr)); gap:12px; }
+      .category-grid.all-categories .category-card { min-height:82px; border:1px solid rgba(184,130,28,.18); background:linear-gradient(135deg,#fffaf0,#f5ead8); box-shadow:0 8px 22px rgba(40,28,12,.06); cursor:pointer; display:flex; align-items:center; justify-content:center; padding:14px; text-align:center; }
+      .category-grid.all-categories .category-card::after { display:none; }
+      .category-grid.all-categories .category-copy { position:static; color:#5b3b16; }
+      .category-grid.all-categories .category-copy span { color:#9b7b4d; opacity:1; font-size:.62rem; }
+      .category-grid.all-categories .category-copy strong { font-family:Georgia,serif; font-size:1rem; letter-spacing:0; }
+      .category-card[data-category]:hover { transform:translateY(-3px); border-color:var(--gold); }
+      .category-card { transition:transform .2s ease,border-color .2s ease; cursor:pointer; }
+      .filter-row { display:flex; flex-wrap:wrap; gap:8px; max-width:760px; }
+      .filter-chip { cursor:pointer; }
+      .product-card img { aspect-ratio: 1 / 1; object-fit:cover; background:#f5eee4; }
+      #new-arrivals .product-card img { height: 220px; aspect-ratio: 4 / 3; object-fit: cover; }
+      .empty-results { grid-column:1/-1; padding:34px; text-align:center; color:var(--muted); background:#fff; border-radius:18px; }
+      .product-modal { display:none; position:fixed; inset:0; z-index:10000; background:rgba(20,15,10,.72); padding:24px; align-items:center; justify-content:center; }
+      .product-modal.open { display:flex; }
+      .product-modal-panel { width:min(850px,100%); max-height:90vh; overflow:auto; display:grid; grid-template-columns:1fr 1fr; gap:24px; background:#fffaf4; border-radius:22px; padding:22px; position:relative; }
+      .product-modal-panel img { width:100%; max-height:65vh; object-fit:contain; border-radius:14px; background:#f5eee4; cursor:zoom-in; }
+      .product-modal-panel img.zoomed { object-fit:contain; transform:scale(1.35); cursor:zoom-out; }
+      .modal-close { position:absolute; right:14px; top:10px; border:0; background:#fff; border-radius:50%; width:36px; height:36px; cursor:pointer; font-size:1.3rem; }
+      .modal-info { padding:30px 10px 10px; }
+      .modal-info h2 { font-family:Georgia,serif; margin-bottom:12px; }
+      .modal-info p { color:var(--muted); line-height:1.7; margin:12px 0; }
+      .category-grid:not(.all-categories) .category-card[data-category] { cursor:pointer; }
+      @media(max-width:900px){.category-grid.all-categories{grid-template-columns:repeat(3,minmax(0,1fr));}.topbar-inner{flex-wrap:wrap;padding:14px 0}.search-box{order:3;max-width:none;flex-basis:100%}}
+      @media(max-width:560px){.category-grid.all-categories{grid-template-columns:repeat(2,minmax(0,1fr));}.product-modal-panel{grid-template-columns:1fr}.modal-info{padding:8px}}
+.category-grid.all-categories .category-card {
+  height: 90px !important;
+  min-height: 90px !important;
+  padding: 6px !important;
+}
+    </style>
+  </head>
+
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand-wrap">
+          <div class="brand-icon">A</div>
+          <div>
+            <span class="brand-name">Aura Jewels</span>
+            <small>Luxury Fashion</small>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#new-arrivals" class="active">New In</a>
+          <a href="#jewelry">Jewellery</a>
+          <a href="#bridal">Bridal</a>
+          <a href="#gifting">Gifting</a>
+          <a href="#offers">Offers</a>
+        </nav>
+
+        <div class="search-box" aria-label="Search products">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="searchInput" type="text" placeholder="Search jewelry, brands and more" />
+        </div>
+
+        <div class="header-actions">
+<button class="icon-btn" type="button" id="wishlistButton">
+    <i class="fa-regular fa-heart"></i> Wishlist
+    <span class="count-pill" id="wishlistCount">0</span>
+</button>
+  <button class="icon-btn" type="button" id="cartButton">
+    <i class="fa-solid fa-bag-shopping"></i> Bag
+    <span class="count-pill" id="cartCount">0</span>
+  </button>
+
+  <button class="profile-pill" type="button">
+    <i class="fa-regular fa-user"></i> Hi, Varsha
+  </button>
+</div>
+      </div>
+    </header>
+    <div id="cartPanel" style="display:none; position:fixed; top:80px; right:20px; background:white; padding:25px; width:320px; max-height:400px; overflow:auto; z-index:9999; box-shadow:0 4px 20px #999; border-radius:12px;">
+  <h2>Your Shopping Bag</h2>
+  <div id="cartItems"></div>
+  <h3 id="cartTotal">Total: ₹0</h3>
+  <button type="button" id="closeCart">Close</button>
+</div>
+
+    <div class="promo-strip">
+      <div class="container promo-strip-inner">
+        <span>Fresh arrivals</span>
+        <span>Up to 70% off</span>
+        <span>Free shipping above ₹1,499</span>
+        <span>Certified quality</span>
+      </div>
+    </div>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-layout">
+          <div class="hero-copy">
+            <p class="eyebrow">Trending this week</p>
+            <h1>Jewels that elevate every moment.</h1>
+            <p>
+              Discover premium necklaces, earrings, rings, and bridal essentials curated for celebrations, gifting, and everyday elegance.
+            </p>
+
+            <div class="cta-row">
+              <button class="primary-btn" id="shopLatestButton" type="button">Shop Latest</button>
+              <button class="secondary-btn" id="exploreBridalButton" type="button">Explore Bridal</button>
+            </div>
+
+            <div class="hero-stats">
+              <div>
+                <strong>4.8/5</strong>
+                <span>Average rating</span>
+              </div>
+              <div>
+                <strong>2.5L+</strong>
+                <span>Happy shoppers</span>
+              </div>
+              <div>
+                <strong>48h</strong>
+                <span>Fast dispatch</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-card">
+              <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1000&q=80" alt="Luxury gold jewelry fashion model" />
+            </div>
+            <div class="floating-note note-sale">
+              <small>Flash deal</small>
+              <strong>₹1,999</strong>
+            </div>
+            <div class="floating-note note-badges">
+              <i class="fa-solid fa-shield-heart"></i>
+              <div>
+                <strong>Verified quality</strong>
+                <small>Hallmarked jewelry</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section class="section-shell" id="jewelry">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Shop by category</p>
+        <h2>Make every style statement</h2>
+      </div>
+      <a href="#all-categories">View all</a>
+    </div>
+
+    <div class="category-grid">
+      <article class="category-card" data-shortcut="Rings">
+        <img src="images/category/category-rings.jpg" alt="Gold rings" />
+        <div class="category-copy">
+          <span>Fine rings</span>
+          <strong>Rings</strong>
+        </div>
+      </article>
+
+      <article class="category-card" data-shortcut="Necklaces">
+        <img src="images/category/category-necklaces.jpg" alt="Gold necklaces" />
+        <div class="category-copy">
+          <span>Signature picks</span>
+          <strong>Necklaces</strong>
+        </div>
+      </article>
+
+      <article class="category-card" data-shortcut="Earrings">
+        <img src="images/category/category-earrings.jpg" alt="Gold earrings" />
+        <div class="category-copy">
+          <span>Daily glam</span>
+          <strong>Earrings</strong>
+        </div>
+      </article>
+
+      <article class="category-card" data-shortcut="Bridal">
+        <img src="images/category/category-bridal.jpg" alt="Bridal jewellery" />
+        <div class="category-copy">
+          <span>Wedding edit</span>
+          <strong>Bridal</strong>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section class="section-shell" id="all-categories"><div class="container"><div class="section-head"><div><p class="eyebrow">18 curated collections</p><h2>Shop all jewellery categories</h2></div></div><div class="category-grid all-categories"><article class="category-card" data-category-card="Rings"><div class="category-copy"><span>Explore collection</span><strong>Rings</strong></div></article>
+<article class="category-card" data-category-card="Necklaces"><div class="category-copy"><span>Explore collection</span><strong>Necklaces</strong></div></article>
+<article class="category-card" data-category-card="Earrings"><div class="category-copy"><span>Explore collection</span><strong>Earrings</strong></div></article>
+<article class="category-card" data-category-card="Bracelets"><div class="category-copy"><span>Explore collection</span><strong>Bracelets</strong></div></article>
+<article class="category-card" data-category-card="Bangles"><div class="category-copy"><span>Explore collection</span><strong>Bangles</strong></div></article>
+<article class="category-card" data-category-card="Nose Pins"><div class="category-copy"><span>Explore collection</span><strong>Nose Pins</strong></div></article>
+<article class="category-card" data-category-card="Bridal"><div class="category-copy"><span>Explore collection</span><strong>Bridal</strong></div></article>
+<article class="category-card" data-category-card="Bridal Sets"><div class="category-copy"><span>Explore collection</span><strong>Bridal Sets</strong></div></article>
+<article class="category-card" data-category-card="Papidi Billa"><div class="category-copy"><span>Explore collection</span><strong>Papidi Billa</strong></div></article>
+<article class="category-card" data-category-card="Vaddanam"><div class="category-copy"><span>Explore collection</span><strong>Vaddanam</strong></div></article>
+<article class="category-card" data-category-card="Jhumkas"><div class="category-copy"><span>Explore collection</span><strong>Jhumkas</strong></div></article>
+<article class="category-card" data-category-card="Mangalsutra"><div class="category-copy"><span>Explore collection</span><strong>Mangalsutra</strong></div></article>
+<article class="category-card" data-category-card="Haram"><div class="category-copy"><span>Explore collection</span><strong>Haram</strong></div></article>
+<article class="category-card" data-category-card="Maang Tikka"><div class="category-copy"><span>Explore collection</span><strong>Maang Tikka</strong></div></article>
+<article class="category-card" data-category-card="Pendants"><div class="category-copy"><span>Explore collection</span><strong>Pendants</strong></div></article>
+<article class="category-card" data-category-card="Chains"><div class="category-copy"><span>Explore collection</span><strong>Chains</strong></div></article>
+<article class="category-card" data-category-card="Anklets"><div class="category-copy"><span>Explore collection</span><strong>Anklets</strong></div></article>
+<article class="category-card" data-category-card="Jewellery Sets"><div class="category-copy"><span>Explore collection</span><strong>Jewellery Sets</strong></div></article></div></div></section>
+
+      <section class="section-shell" id="offers">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Hot deals</p>
+              <h2>Trending offers this week</h2>
+            </div>
+            <a href="#all-categories">See more</a>
+          </div>
+
+          <div class="banner-grid">
+            <article class="promo-banner banner-1">
+              <div>
+                <small>Weekend rush</small>
+                <h3>Up to 60% off</h3>
+              </div>
+              <button type="button">Shop now</button>
+            </article>
+            <article class="promo-banner banner-2">
+              <div>
+                <small>Wedding edit</small>
+                <h3>Bridal sparkle</h3>
+              </div>
+              <button type="button">View edit</button>
+            </article>
+            <article class="promo-banner banner-3">
+              <div>
+                <small>Gift picks</small>
+                <h3>Under ₹3,999</h3>
+              </div>
+              <button type="button">Grab deals</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      
+
+      
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Best sellers</p>
+              <h2>Trending picks for you</h2>
+            </div>
+            <div class="filter-row" aria-label="Product filters">
+              <button class="filter-chip active" data-category="All" type="button">All</button>
+            </div>
+          </div>
+
+<div class="product-grid" id="productGrid" style="display: none;"></div>              <span class="product-badge">Bestseller</span>
+              <button class="wishlist-btn" type="button"><i class="fa-regular fa-heart"></i></button>
+              <div class="product-body">
+                <div class="product-head">
+                  <h3>Solitaire Diamond Ring</h3>
+                </div>
+                <div class="product-brand">Aurum Elegance</div>
+                <div class="rating-row">
+                  <span class="rating-chip"><i class="fa-solid fa-star"></i> 4.8</span>
+                </div>
+                <div class="price-row">
+                  <span class="price">₹45,999</span>
+                  <span class="cut-price">₹59,999</span>
+                  <span class="discount">23% off</span>
+                </div>
+                <button class="cta-product" type="button">Add to bag</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-category="necklaces">
+              <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=800&q=80" alt="Gold chain necklace" />
+              <span class="product-badge">New</span>
+              <button class="wishlist-btn" type="button"><i class="fa-regular fa-heart"></i></button>
+              <div class="product-body">
+                <div class="product-head">
+                  <h3>Gold Link Necklace</h3>
+                </div>
+                <div class="product-brand">Charms Studio</div>
+                <div class="rating-row">
+                  <span class="rating-chip"><i class="fa-solid fa-star"></i> 4.7</span>
+                </div>
+                <div class="price-row">
+                  <span class="price">₹32,999</span>
+                  <span class="cut-price">₹43,999</span>
+                  <span class="discount">25% off</span>
+                </div>
+                <button class="cta-product" type="button">Add to bag</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-category="earrings">
+              <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80" alt="Pearl drop earrings" />
+              <span class="product-badge">Trending</span>
+              <button class="wishlist-btn" type="button"><i class="fa-regular fa-heart"></i></button>
+              <div class="product-body">
+                <div class="product-head">
+                  <h3>Pearl Drop Earrings</h3>
+                </div>
+                <div class="product-brand">Pearl Vogue</div>
+                <div class="rating-row">
+                  <span class="rating-chip"><i class="fa-solid fa-star"></i> 4.9</span>
+                </div>
+                <div class="price-row">
+                  <span class="price">₹18,999</span>
+                  <span class="cut-price">₹24,999</span>
+                  <span class="discount">24% off</span>
+                </div>
+     <section class="section-shell" id="new-arrivals">           <button class="cta-product" type="button">Add to bag</button>
+              </div>
+            </article>
+
+            <article class="product-card" data-category="bridal">
+              <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=80" alt="Bridal jewelry set" />
+              <span class="product-badge">Bridal</span>
+              <button class="wishlist-btn" type="button"><i class="fa-regular fa-heart"></i></button>
+              <div class="product-body">
+                <div class="product-head">
+                  <h3>Bridal Heritage Set</h3>
+                </div>
+                <div class="product-brand">Royal Aura</div>
+                <div class="rating-row">
+                  <span class="rating-chip"><i class="fa-solid fa-star"></i> 4.9</span>
+                </div>
+                <div class="price-row">
+                  <span class="price">₹78,999</span>
+                  <span class="cut-price">₹99,999</span>
+                  <span class="discount">21% off</span>
+                </div>
+                <button class="cta-product" type="button">Add to bag</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell editorial-wrap">
+        <div class="container editorial-banner">
+          <div class="editorial-copy">
+            <p class="eyebrow">Luxury edit</p>
+            <h2>Jewelry for every big moment.</h2>
+            <p>
+              Handpicked pieces that pair statement sparkle with comfortable, daily wear energy—ideal for festive occasions, gifts, and personal milestones.
+            </p>
+
+            <div class="editorial-list">
+              <div class="mini-stat">
+                <i class="fa-solid fa-gem"></i>
+                <div>
+                  <strong>Certified brilliance</strong>
+                  <span>Authenticity checked before dispatch</span>
+                </div>
+              </div>
+              <div class="mini-stat">
+                <i class="fa-solid fa-box-open"></i>
+                <div>
+                  <strong>Gift-ready packaging</strong>
+                  <span>Beautiful boxes and festive wrapping</span>
+                </div>
+              </div>
+              <div class="mini-stat">
+                <i class="fa-solid fa-truck-fast"></i>
+                <div>
+                  <strong>Fast delivery</strong>
+                  <span>Pan-India shipping across major cities</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1100&q=80" alt="Woman wearing elegant jewelry" />
+        </div>
+      </section>
+
+      <section class="section-shell">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Why choose us</p>
+              <h2>Built around trust and beautiful finishing</h2>
+            </div>
+          </div>
+
+          <div class="reliability-grid">
+            <div class="reliability-card">
+              <i class="fa-solid fa-truck-fast"></i>
+              <div>
+                <strong>Free delivery</strong>
+                <span>On orders above ₹1,499</span>
+              </div>
+            </div>
+            <div class="reliability-card">
+              <i class="fa-solid fa-rotate-left"></i>
+              <div>
+                <strong>Easy returns</strong>
+                <span>7-day easy exchange</span>
+              </div>
+            </div>
+            <div class="reliability-card">
+              <i class="fa-solid fa-lock"></i>
+              <div>
+                <strong>Secure payment</strong>
+                <span>Protected checkout</span>
+              </div>
+            </div>
+            <div class="reliability-card">
+              <i class="fa-solid fa-headset"></i>
+              <div>
+                <strong>24/7 support</strong>
+                <span>Shopping help at every step</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell">
+        <div class="container brand-banner">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Featured brands</p>
+              <h2>Designed by trusted names</h2>
+            </div>
+          </div>
+          <div class="brand-banner-row">
+            <div class="brand-pill">Aurum</div>
+            <div class="brand-pill">Pearl V</div>
+            <div class="brand-pill">Saffron</div>
+            <div class="brand-pill">Radha</div>
+            <div class="brand-pill">Lustre</div>
+            <div class="brand-pill">Velora</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Loved by customers</p>
+              <h2>Real stories, real sparkle</h2>
+            </div>
+          </div>
+
+          <div class="testimonial-grid">
+            <article class="testimonial-card">
+              <div class="stars">★★★★★</div>
+              <p>“The necklace looks even better in person. The packaging was premium, delivery was super fast, and quality feels luxury-grade.”</p>
+              <div class="testimonial-meta">
+                <strong>Neha S.</strong>
+                <span>Bengaluru</span>
+              </div>
+            </article>
+            <article class="testimonial-card">
+              <div class="stars">★★★★★</div>
+              <p>“I bought a bridal set for my wedding and it exceeded my expectations. It feels elegant, genuine, and incredibly beautiful.”</p>
+              <div class="testimonial-meta">
+                <strong>Riya M.</strong>
+                <span>Mumbai</span>
+              </div>
+            </article>
+            <article class="testimonial-card">
+              <div class="stars">★★★★★</div>
+              <p>“The design, pricing, and customer support were excellent. It feels like a premium Myntra-style shopping experience with jewelry focused details.”</p>
+              <div class="testimonial-meta">
+                <strong>Arjun P.</strong>
+                <span>Delhi</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="newsletter">
+        <div class="container newsletter-box">
+          <div>
+            <p class="eyebrow" style="background: rgba(255,255,255,0.08); color:#f7d38a;">Stay updated</p>
+            <h3>Get early access to new drops.</h3>
+            <p>Exclusive offers, curated updates, and festive gifting ideas in your inbox.</p>
+          </div>
+          <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you! You are subscribed to Aura Jewels updates.'); this.reset();">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <h4>Aura Jewels</h4>
+          <p>Luxury jewelry crafted to brighten moments, celebrations, and everyday confidence.</p>
+        </div>
+        <div>
+          <h4>Shop</h4>
+          <ul>
+            <li>Rings</li>
+            <li>Necklaces</li>
+            <li>Earrings</li>
+            <li>Bridal</li>
+          </ul>
+        </div>
+        <div>
+          <h4>About</h4>
+          <ul>
+            <li>Our story</li>
+            <li>Careers</li>
+            <li>Press</li>
+            <li>Support</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Follow us</h4>
+          <div class="footer-socials">
+            <i class="fa-brands fa-instagram"></i>
+            <i class="fa-brands fa-facebook-f"></i>
+            <i class="fa-brands fa-x-twitter"></i>
+            <i class="fa-brands fa-youtube"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-label="Product details"><div class="product-modal-panel"><button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button><img id="modalImage" alt="Selected jewellery product" /><div class="modal-info"><p class="eyebrow">Aura Jewels</p><h2 id="modalName"></h2><strong id="modalPrice"></strong><p id="modalDescription">Beautifully selected jewellery from the Aura Jewels collection.</p><button class="primary-btn" id="modalAddToBag" type="button">Add to bag</button><p><small>Tip: select the image to zoom in.</small></p></div></div></div>
+
+
+<div class="product-modal" id="productModal" role="dialog" aria-modal="true" aria-label="Product details"><div class="product-modal-panel"><button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button><img id="modalImage" alt="Selected jewellery product" /><div class="modal-info"><p class="eyebrow">Aura Jewels</p><h2 id="modalName"></h2><strong id="modalPrice"></strong><p id="modalDescription">Beautifully selected jewellery from the Aura Jewels collection.</p><button class="primary-btn" id="modalAddToBag" type="button">Add to bag</button><p><small>Tip: select the image to zoom in.</small></p></div></div></div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const productGrid = document.getElementById('productGrid');
+  const wishlistCount = document.getElementById('wishlistCount');
+  const categoryNames = ['Rings','Necklaces','Earrings','Bracelets','Bangles','Nose Pins','Bridal','Bridal Sets','Papidi Billa','Vaddanam','Jhumkas','Mangalsutra','Haram','Maang Tikka','Pendants','Chains','Anklets','Jewellery Sets'];
+  let selectedCategory = 'All';
+  let allProducts = [];
+  let visibleProducts = [];
+  let cart = JSON.parse(localStorage.getItem('auraCart') || '[]');
+  let wishlist = JSON.parse(localStorage.getItem('auraWishlist') || '[]');
+  let modalProduct = null;
+  const norm = value => String(value || '').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const categoryAliases = { 'jewellerysets':['jewellerysets','jewelrysets','jewelleryset'], 'nosepins':['nosepins','nosepin','nosepinss'], 'mangalsutra':['mangalsutra','mangalsutras'], 'bridal':['bridal','bridaljewellery','bridaljewelry'], 'jhumkas':['jhumkas','jhumka','earrings'] };
+  function categoryMatch(productCategory, wanted) {
+    if (wanted === 'All') return true;
+    const a=norm(productCategory), b=norm(wanted);
+    if (a===b) return true;
+    if ((categoryAliases[b]||[b]).includes(a) || (categoryAliases[b]||[b]).includes(b) && a===b) return true;
+    if (wanted==='Bridal') return a.includes('bridal');
+    if (wanted==='Earrings' || wanted==='Jhumkas') return a.includes('earring') || a.includes('jhumka');
+    if (wanted==='Jewellery Sets') return a.includes('jewelleryset') || a.includes('jewelryset');
+    return false;
+  }
+  function saveCart(){localStorage.setItem('auraCart',JSON.stringify(cart));updateCartCount();}
+  function saveWishlist(){localStorage.setItem('auraWishlist',JSON.stringify(wishlist));updateWishlistCount();}
+  function updateCartCount(){const el=document.getElementById('cartCount');if(el)el.textContent=cart.reduce((n,p)=>n+Number(p.quantity||1),0);}
+  function updateWishlistCount(){if(wishlistCount)wishlistCount.textContent=wishlist.length;}
+  function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));}
+  function productImage(product){
+    const name=norm(product.name), cat=norm(product.category), original=String(product.imageUrl||'').trim();
+    if ((name.includes('jhumka')||cat==='jhumkas') && (!original || original.endsWith('.svg') || original.includes('illustration'))) return name.includes('emerald')?'images/generated/emerald-jhumkas.png':'images/generated/ruby-jhumka-earrings.png';
+    if ((cat==='earrings'||cat==='bridal'||cat==='bridalsets') && (!original || original.endsWith('.svg') || original.includes('illustration'))) return 'images/generated/gold-gemstone-earring-collection.png';
+    if (original) return original;
+    if (cat.includes('necklace')||cat==='haram'||cat==='chains') return 'images/layered-necklace.jpg';
+    if (cat==='pendants') return 'images/pendant-necklace.jpg';
+    return 'images/necklace.jpg';
+  }
+  function productObject(product){return {id:product.id,name:product.name,category:product.category,price:Number(product.price)||0,image:productImage(product),description:product.description||'' ,quantity:1};}
+  function renderProducts(){
+    const q=norm(searchInput?.value||'');
+    visibleProducts=allProducts.filter(p=>{
+      const searchOk=!q || norm(p.name).includes(q) || norm(p.category).includes(q) || norm(p.description).includes(q);
+      const catOk=selectedCategory==='Gifting' ? ['pendants','jewellerysets','rings','bracelets'].some(c=>norm(p.category).includes(c)) : selectedCategory==='New In' ? true : selectedCategory==='Jewellery' ? true : categoryMatch(p.category,selectedCategory);
+      return searchOk&&catOk;
+    });
+    productGrid.innerHTML='';
+    if(!visibleProducts.length){productGrid.innerHTML='<div class="empty-results">No matching jewellery found. Try another product name or category.</div>';return;}
+    visibleProducts.forEach(p=>{
+      const product=productObject(p), card=document.createElement('article');
+      card.className='product-card';card.dataset.category=p.category||'';card.dataset.productId=p.id;
+      card.innerHTML=`<img src="${escapeHtml(product.image)}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src='images/necklace.jpg';" /><button class="wishlist-btn" type="button" aria-label="Add to wishlist"><i class="fa-regular fa-heart"></i></button><div class="product-body"><div class="product-head"><h3>${escapeHtml(p.name)}</h3></div><div class="product-brand">${escapeHtml(p.category||'Aura Jewels')}</div><div class="price-row"><span class="price">₹${product.price.toLocaleString('en-IN')}</span></div><button class="cta-product" type="button">Add to bag</button></div>`;
+      productGrid.appendChild(card);
+    });
+    syncWishlistHearts();
+  }
+  async function loadProducts(){
+    productGrid.innerHTML='<div class="empty-results">Loading Aura Jewels collection…</div>';
+    try{const response=await fetch('http://localhost:8080/api/products');if(!response.ok)throw new Error('Products API returned '+response.status);allProducts=await response.json();renderProducts();}
+    catch(error){console.error(error);productGrid.innerHTML='<div class="empty-results">Could not connect to the product catalogue. Keep the Spring Boot backend running, then refresh this page.</div>';}
+  }
+  function syncWishlistHearts(){document.querySelectorAll('#productGrid .product-card').forEach(card=>{const name=card.querySelector('h3')?.textContent.trim();const icon=card.querySelector('.wishlist-btn i');if(icon){const saved=wishlist.some(p=>p.name===name);icon.classList.toggle('fa-solid',saved);icon.classList.toggle('fa-regular',!saved);}});}
+function chooseCategory(category) {
+  selectedCategory = category;
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', (c.dataset.category || c.textContent.trim()) === category);
+  });
+  if (searchInput) searchInput.value = '';
+  productGrid.style.display = 'grid';
+  renderProducts();
+  document.getElementById('new-arrivals').scrollIntoView({behavior:'smooth', block:'start'});
+}  document.querySelectorAll('.filter-chip').forEach(chip=>chip.addEventListener('click',()=>chooseCategory(chip.dataset.category||chip.textContent.trim())));
+  document.querySelectorAll('[data-category-card]').forEach(card=>card.addEventListener('click',()=>chooseCategory(card.dataset.categoryCard)));
+  document.querySelectorAll('[data-shortcut]').forEach(card=>card.addEventListener('click',()=>chooseCategory(card.dataset.shortcut)));
+  document.getElementById('shopLatestButton')?.addEventListener('click',()=>chooseCategory('New In'));
+  document.getElementById('exploreBridalButton')?.addEventListener('click',()=>chooseCategory('Bridal'));
+  document.querySelectorAll('.main-nav a[href="#bridal"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();chooseCategory('Bridal');}));
+  document.querySelectorAll('.main-nav a[href="#gifting"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();chooseCategory('Gifting');}));
+  document.querySelectorAll('.main-nav a[href="#jewelry"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.getElementById('jewelry').scrollIntoView({behavior:'smooth'});}));
+searchInput?.addEventListener('input', () => {
+  selectedCategory = 'All';
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.toggle('active', c.dataset.category === 'All'));
+  productGrid.style.display = 'grid';
+  renderProducts();
+});  document.getElementById('cartButton')?.addEventListener('click',()=>window.location.href='cart.html');
+  document.getElementById('wishlistButton')?.addEventListener('click',()=>window.location.href='wishlist.html');
+  function openProductModal(product){modalProduct=product;document.getElementById('modalImage').src=product.image;document.getElementById('modalImage').classList.remove('zoomed');document.getElementById('modalName').textContent=product.name;document.getElementById('modalPrice').textContent='₹'+product.price.toLocaleString('en-IN');document.getElementById('modalDescription').textContent=product.description||'A thoughtfully selected piece from the Aura Jewels collection.';document.getElementById('productModal').classList.add('open');}
+  function addToBag(product){const found=cart.find(p=>p.name===product.name);if(found)found.quantity=Number(found.quantity||1)+1;else cart.push(product);saveCart();}
+  productGrid.addEventListener('click',event=>{const card=event.target.closest('.product-card');if(!card)return;const p=allProducts.find(x=>String(x.id)===card.dataset.productId);if(!p)return;const product=productObject(p);if(event.target.closest('.wishlist-btn')){const i=wishlist.findIndex(x=>x.name===product.name);if(i<0)wishlist.push({name:product.name,price:product.price,image:product.image});else wishlist.splice(i,1);saveWishlist();syncWishlistHearts();return;}if(event.target.closest('.cta-product')){addToBag(product);return;}if(event.target.closest('img')||event.target.closest('.product-body'))openProductModal(product);});
+  document.getElementById('modalClose')?.addEventListener('click',()=>document.getElementById('productModal').classList.remove('open'));
+  document.getElementById('productModal')?.addEventListener('click',e=>{if(e.target.id==='productModal')e.currentTarget.classList.remove('open');});
+  document.getElementById('modalImage')?.addEventListener('click',e=>e.currentTarget.classList.toggle('zoomed'));
+  document.getElementById('modalAddToBag')?.addEventListener('click',()=>{if(modalProduct)addToBag(modalProduct);document.getElementById('productModal').classList.remove('open');});
+  document.querySelectorAll('.promo-banner button').forEach((b,i)=>b.addEventListener('click',()=>chooseCategory(i===1?'Bridal':i===2?'Gifting':'All')));
+  updateCartCount();updateWishlistCount();loadProducts();
+</script>
+</body>
+</html>
+

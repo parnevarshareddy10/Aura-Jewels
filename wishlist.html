@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist | Aura Jewels</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fffaf5;
+            color: #333;
+        }
+
+        header {
+            background: #251b18;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        header h1 {
+            letter-spacing: 4px;
+            color: #e8c58b;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 35px 0 25px;
+        }
+
+        #wishlist {
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px #00000012;
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: 210px;
+            object-fit: contain;
+        }
+
+        .product h3 {
+            margin: 12px 0;
+        }
+
+        .price {
+            color: #a87936;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        button {
+            border: none;
+            padding: 11px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .remove {
+            background: #eee;
+        }
+
+        .add {
+            background: #251b18;
+            color: white;
+        }
+
+        #empty {
+            text-align: center;
+            padding: 50px 15px;
+            grid-column: 1 / -1;
+        }
+
+        #empty a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #9b6b2d;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>AURA JEWELS</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Shopping Bag</a>
+        <a href="wishlist.html">Wishlist ❤️</a>
+    </nav>
+</header>
+
+<h2>My Wishlist ❤️</h2>
+
+<div id="wishlist"></div>
+
+<script>
+    let wishlist = JSON.parse(
+        localStorage.getItem("auraWishlist") || "[]"
+    );
+
+    function displayWishlist() {
+        const container = document.getElementById("wishlist");
+
+        if (wishlist.length === 0) {
+            container.innerHTML = `
+                <div id="empty">
+                    <h3>Your wishlist is empty ❤️</h3>
+                    <p>Save your favourite jewellery here.</p>
+                    <a href="index.html">Continue Shopping</a>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = wishlist.map((item, index) => `
+            <div class="product">
+                <img src="${item.image || 'images/necklace.jpg'}"
+                     alt="Jewellery"
+                     onerror="this.src='images/necklace.jpg'">
+
+                <h3>${escapeHTML(item.name)}</h3>
+
+                <p class="price">₹${Number(item.price).toLocaleString("en-IN")}</p>
+
+                <button class="add" onclick="addToBag(${index})">
+                    Add to Bag
+                </button>
+
+                <button class="remove" onclick="removeItem(${index})">
+                    Remove
+                </button>
+            </div>
+        `).join("");
+    }
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, char => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[char]);
+    }
+
+    function removeItem(index) {
+        wishlist.splice(index, 1);
+        localStorage.setItem("auraWishlist", JSON.stringify(wishlist));
+        displayWishlist();
+    }
+
+    function addToBag(index) {
+        let cart = JSON.parse(localStorage.getItem("auraCart") || "[]");
+        const item = wishlist[index];
+
+        const existing = cart.find(product => product.name === item.name);
+
+        if (existing) {
+            existing.quantity = Number(existing.quantity || 1) + 1;
+        } else {
+            cart.push({
+                name: item.name,
+                price: Number(item.price),
+                image: item.image || "",
+                quantity: 1
+            });
+        }
+
+        localStorage.setItem("auraCart", JSON.stringify(cart));
+
+        alert("Product added to your shopping bag!");
+    }
+
+    displayWishlist();
+</script>
+
+</body>
+</html>

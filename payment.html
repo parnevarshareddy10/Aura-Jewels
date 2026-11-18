@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aura Jewels | Payment</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #faf8f3;
+    color: #333;
+}
+
+header {
+    background: white;
+    padding: 22px;
+    text-align: center;
+    border-bottom: 1px solid #e8dfce;
+}
+
+header h1 {
+    margin: 0;
+    color: #9b783d;
+    letter-spacing: 4px;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 850px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border: 1px solid #eee5d5;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+h2 { color: #8c6b36; }
+
+.option {
+    display: block;
+    padding: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 14px 0;
+    cursor: pointer;
+}
+
+.option input {
+    margin-right: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 16px;
+    background: #a7864c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover { background: #876832; }
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #8c6b36;
+}
+
+.notice {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+#message {
+    display: none;
+    padding: 20px;
+    background: #f5f3eb;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>AURA JEWELS</h1>
+    <p>🔒 Secure Checkout</p>
+</header>
+
+<main class="container">
+
+    <div class="card" id="paymentSection">
+        <h2>Choose Payment Method</h2>
+        <p>Select how you would like to pay.</p>
+
+        <h3 id="amount">Amount Payable: ₹0</h3>
+
+        <label class="option">
+            <input type="radio" name="payment" value="cod" checked>
+            Cash on Delivery
+        </label>
+
+        <label class="option">
+            <input type="radio" name="payment" value="online">
+            Online Payment (Demo Only)
+        </label>
+
+        <p class="notice">
+            Online payment is not connected to a real payment gateway.
+            No actual money will be collected.
+        </p>
+
+        <button type="button" id="confirmPayment">
+            CONFIRM PAYMENT METHOD
+        </button>
+
+        <div id="message"></div>
+    </div>
+
+    <a class="back" href="checkout.html">← Back to Delivery Details</a>
+
+</main>
+
+<footer style="text-align:center;padding:25px;color:#888;">
+    AURA JEWELS © 2026 | Elegance in Every Detail
+</footer>
+
+<script>
+const cart = JSON.parse(localStorage.getItem("auraCart")) || [];
+
+if (cart.length === 0) {
+    document.getElementById("paymentSection").innerHTML =
+        '<h2>Your shopping bag is empty.</h2><a href="index.html">Explore Aura Jewels</a>';
+} else {
+    const subtotal = cart.reduce((sum, item) =>
+        sum + Number(item.price) * (Number(item.quantity) || 1), 0);
+
+    const discount = Number(localStorage.getItem("auraDiscount")) || 0;
+    const delivery = subtotal >= 999 ? 0 : 49;
+    const total = subtotal - discount + delivery;
+
+    document.getElementById("amount").textContent =
+        "Amount Payable: ₹" + total.toLocaleString("en-IN");
+}
+
+
+document.getElementById("confirmPayment").addEventListener("click", async function() {
+    const selected = document.querySelector('input[name="payment"]:checked');
+
+    if (!selected) {
+        alert("Please select a payment method.");
+        return;
+    }
+
+    const message = document.getElementById("message");
+    message.style.display = "block";
+
+    if (selected.value !== "cod") {
+        message.innerHTML =
+            "<h3>Online Payment Demo</h3>" +
+            "<p>A real payment gateway must be connected. No money has been charged.</p>";
+        return;
+    }
+
+    const customer = JSON.parse(
+        localStorage.getItem("auraCheckoutCustomer") || "null"
+    );
+
+    if (!customer) {
+        alert("Please enter your delivery address again.");
+        window.location.href = "checkout.html";
+        return;
+    }
+
+    const cart = JSON.parse(localStorage.getItem("auraCart") || "[]");
+
+    if (cart.length === 0) {
+        alert("Your shopping bag is empty.");
+        return;
+    }
+
+    const subtotal = cart.reduce(
+        (sum, item) =>
+            sum + Number(item.price) * (Number(item.quantity) || 1), 0
+    );
+
+    const savedDiscount = Number(localStorage.getItem("auraDiscount")) || 0;
+    const discount = Math.min(savedDiscount, subtotal);
+    const delivery = subtotal === 0 || subtotal >= 999 ? 0 : 49;
+    const total = subtotal - discount + delivery;
+
+    const order = {
+        customerName: customer.name,
+        mobile: customer.mobile,
+        email: customer.email,
+        address: customer.address,
+        city: customer.city,
+        state: customer.state,
+        pincode: customer.pincode,
+        landmark: customer.landmark,
+        paymentMethod: "Cash on Delivery",
+        totalAmount: total,
+        
+items: cart.map(item => ({
+    productName: item.name,
+    price: Number(item.price),
+    quantity: Number(item.quantity) || 1,
+    imageUrl: item.image || ""
+}))
+
+    };
+
+    message.innerHTML = "<p>Placing your order. Please wait...</p>";
+
+    try {
+        const response = await fetch("http://localhost:8080/api/orders", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(order)
+        });
+
+        if (!response.ok) {
+            throw new Error("Order could not be saved.");
+        }
+
+        const savedOrder = await response.json();
+
+        localStorage.removeItem("auraCart");
+        localStorage.removeItem("auraDiscount");
+
+        message.innerHTML =
+            "<h3>Order Placed Successfully!</h3>" +
+            "<p>Your Order ID: " + savedOrder.id + "</p>" +
+            "<p>Payment Method: Cash on Delivery</p>" +
+            "<p>Total Amount: ₹" + total.toFixed(2) + "</p>";
+
+    } catch (error) {
+        message.innerHTML =
+            "<h3>Unable to place your order</h3>" +
+            "<p>Please try again. Your cart has not been cleared.</p>";
+        console.error(error);
+    }
+});
+
+</script>
+
+</body>
+</html>

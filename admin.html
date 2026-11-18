@@ -1,0 +1,361 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aura Jewels | Admin Dashboard</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f3ef;
+    color: #333;
+}
+
+header {
+    background: #29201d;
+    color: white;
+    padding: 22px;
+    text-align: center;
+}
+
+header h1 { margin: 0; letter-spacing: 3px; }
+
+main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 15px;
+}
+
+.login-box, .summary, .order-card {
+    background: white;
+    padding: 22px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.login-box {
+    max-width: 420px;
+    margin: 40px auto;
+}
+
+input, select, button {
+    padding: 11px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 8px;
+}
+
+input {
+    display: block;
+    width: 100%;
+}
+
+button {
+    background: #704c38;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+button:hover { background: #4e3529; }
+
+.orders { display: grid; gap: 20px; }
+
+.order-card h2 { color: #815c43; }
+
+.product {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+    padding: 12px 0;
+}
+
+.product img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.details { line-height: 1.8; overflow-wrap: anywhere; }
+
+#message, #loginMessage {
+    margin-bottom: 15px;
+    color: #704c38;
+}
+
+.hidden { display: none; }
+
+@media(max-width:600px) {
+    .order-card { padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>AURA JEWELS</h1>
+    <p>Admin Dashboard</p>
+</header>
+
+<main>
+
+    <section id="loginSection" class="login-box">
+        <h2>Admin Login</h2>
+
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input id="username" type="text" required>
+
+            <label for="password">Password</label>
+            <input id="password" type="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p id="loginMessage"></p>
+    </section>
+
+    <section id="dashboard" class="hidden">
+
+        <div class="summary">
+            <h2>Order Management</h2>
+            <p>Total Orders: <strong id="totalOrders">0</strong></p>
+            <button onclick="loadOrders()">Refresh Orders</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <div id="message"></div>
+        <div class="orders" id="orders"></div>
+
+    </section>
+
+</main>
+
+<script>
+const API = "http://localhost:8080/api/orders";
+
+let authHeader = "";
+
+const loginSection = document.getElementById("loginSection");
+const dashboard = document.getElementById("dashboard");
+const loginMessage = document.getElementById("loginMessage");
+
+document.getElementById("loginForm").addEventListener("submit",
+async function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    loginMessage.textContent = "Checking login...";
+
+    authHeader = "Basic " + btoa(username + ":" + password);
+
+    try {
+        const response = await fetch(API, {
+            headers: {
+                "Authorization": authHeader
+            }
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            throw new Error("Incorrect username or password.");
+        }
+
+        if (!response.ok) {
+            throw new Error("Unable to connect to the server.");
+        }
+
+        const orders = await response.json();
+
+        loginSection.classList.add("hidden");
+        dashboard.classList.remove("hidden");
+
+        document.getElementById("password").value = "";
+
+        displayOrders(orders);
+
+    } catch (error) {
+        authHeader = "";
+        loginMessage.textContent = error.message;
+        console.error(error);
+    }
+});
+
+async function loadOrders() {
+    const message = document.getElementById("message");
+
+    message.textContent = "Loading orders...";
+
+    try {
+        const response = await fetch(API, {
+            headers: {
+                "Authorization": authHeader
+            }
+        });
+
+        if (response.status === 401 || response.status === 403) {
+            logout();
+            throw new Error("Login expired. Please log in again.");
+        }
+
+        if (!response.ok) {
+            throw new Error("Could not load orders.");
+        }
+
+        const orders = await response.json();
+        displayOrders(orders);
+
+    } catch (error) {
+        message.textContent = error.message;
+        console.error(error);
+    }
+}
+
+function displayOrders(orders) {
+    const container = document.getElementById("orders");
+    const message = document.getElementById("message");
+
+    container.innerHTML = "";
+    message.textContent = "";
+
+    document.getElementById("totalOrders").textContent = orders.length;
+
+    if (orders.length === 0) {
+        container.textContent = "No orders found.";
+        return;
+    }
+
+    orders.sort((a, b) => b.id - a.id);
+
+    orders.forEach(order => {
+        const card = document.createElement("div");
+        card.className = "order-card";
+
+        const heading = document.createElement("h2");
+        heading.textContent = "Order #" + order.id;
+        card.appendChild(heading);
+
+        const customer = document.createElement("div");
+        customer.className = "details";
+
+        customer.textContent =
+            "Customer: " + (order.customerName || "") +
+            " | Mobile: " + (order.mobile || "") +
+            " | Email: " + (order.email || "") +
+            " | Address: " + (order.address || "") + ", " +
+            (order.city || "") + ", " +
+            (order.state || "") + " - " +
+            (order.pincode || "") +
+            " | Payment: " + (order.paymentMethod || "") +
+            " | Total: ₹" + Number(order.totalAmount || 0).toFixed(2) +
+            " | Date: " + (order.orderDate || "");
+
+        card.appendChild(customer);
+
+        const title = document.createElement("h3");
+        title.textContent = "Purchased Products";
+        card.appendChild(title);
+
+        (order.items || []).forEach(item => {
+            const product = document.createElement("div");
+            product.className = "product";
+
+            if (item.imageUrl) {
+                const img = document.createElement("img");
+                img.src = item.imageUrl;
+                img.alt = item.productName || "Product";
+                img.onerror = function() {
+                    this.style.display = "none";
+                };
+                product.appendChild(img);
+            }
+
+            const info = document.createElement("div");
+            info.textContent =
+                (item.productName || "Product") +
+                " | ₹" + item.price +
+                " | Quantity: " + item.quantity;
+
+            product.appendChild(info);
+            card.appendChild(product);
+        });
+
+        const status = document.createElement("p");
+        status.textContent = "Current Status: " + order.orderStatus;
+        card.appendChild(status);
+
+        const select = document.createElement("select");
+
+        ["PLACED", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"]
+        .forEach(value => {
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            option.selected = value === order.orderStatus;
+            select.appendChild(option);
+        });
+
+        card.appendChild(select);
+
+        const update = document.createElement("button");
+        update.textContent = "Update Status";
+        update.onclick = () => updateStatus(order.id, select.value);
+
+        card.appendChild(update);
+        container.appendChild(card);
+    });
+}
+
+async function updateStatus(id, status) {
+    try {
+        const response = await fetch(
+            API + "/" + id + "/status?status=" +
+            encodeURIComponent(status),
+            {
+                method: "PUT",
+                headers: {
+                    "Authorization": authHeader
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Status update failed.");
+        }
+
+        alert("Order status updated successfully!");
+        loadOrders();
+
+    } catch (error) {
+        alert(error.message);
+        console.error(error);
+    }
+}
+
+function logout() {
+    authHeader = "";
+
+    dashboard.classList.add("hidden");
+    loginSection.classList.remove("hidden");
+
+    document.getElementById("loginForm").reset();
+    document.getElementById("orders").innerHTML = "";
+    document.getElementById("totalOrders").textContent = "0";
+    document.getElementById("message").textContent = "";
+    loginMessage.textContent = "";
+}
+</script>
+
+</body>
+</html>
+```

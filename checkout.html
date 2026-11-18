@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Aura Jewels</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #faf8f4;
+    color: #302b25;
+}
+
+header {
+    background: white;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee5d7;
+}
+
+.logo {
+    font-family: Georgia, serif;
+    font-size: 27px;
+    letter-spacing: 3px;
+    color: #9b762e;
+    font-weight: bold;
+}
+
+.secure {
+    color: #777;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 1150px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.steps {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    color: #999;
+    font-size: 13px;
+}
+
+.steps .active {
+    color: #9b762e;
+    font-weight: bold;
+}
+
+h1 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.panel {
+    background: white;
+    border: 1px solid #eee7dc;
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.panel h2 {
+    font-family: Georgia, serif;
+    font-size: 23px;
+    font-weight: normal;
+    margin-bottom: 22px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #555;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd5c9;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    background: white;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #a17c39;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.save-note {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #777;
+}
+
+.save-note input {
+    width: auto;
+}
+
+.summary {
+    position: sticky;
+    top: 20px;
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.product {
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.product img {
+    width: 65px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #f5f1e9;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-info h3 {
+    font-family: Georgia, serif;
+    font-size: 15px;
+    font-weight: normal;
+    margin-bottom: 7px;
+}
+
+.product-info p {
+    font-size: 12px;
+    color: #888;
+}
+
+.product-price {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 15px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.price-row strong {
+    color: #302b25;
+}
+
+.total {
+    border-top: 1px solid #eee;
+    padding-top: 18px;
+    font-size: 17px;
+}
+
+.place-order {
+    width: 100%;
+    padding: 16px;
+    background: #9b762e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.place-order:hover {
+    background: #795a20;
+}
+
+.back {
+    display: block;
+    margin-top: 18px;
+    text-align: center;
+    color: #98712e;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.empty {
+    background: white;
+    padding: 45px 20px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.empty a {
+    color: #9b762e;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.confirmation {
+    display: none;
+    background: white;
+    padding: 45px 25px;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid #eee7dc;
+}
+
+.confirmation h2 {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    font-weight: normal;
+    margin: 15px 0;
+}
+
+.confirmation p {
+    color: #777;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.confirmation a {
+    display: inline-block;
+    margin-top: 22px;
+    background: #9b762e;
+    color: white;
+    padding: 13px 22px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px 15px;
+    color: #999;
+    font-size: 12px;
+}
+
+@media(max-width: 800px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .summary {
+        position: static;
+    }
+}
+
+@media(max-width: 500px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    .logo {
+        font-size: 21px;
+    }
+
+    .secure {
+        font-size: 11px;
+    }
+
+    .container {
+        margin-top: 25px;
+        padding: 0 12px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">AURA JEWELS</div>
+    <div class="secure">🔒 Secure Checkout</div>
+</header>
+
+<main class="container">
+
+    <div class="steps">
+        <span>1. BAG</span>
+        <span>—</span>
+        <span class="active">2. ADDRESS</span>
+        <span>—</span>
+        <span>3. PAYMENT</span>
+    </div>
+
+    <section id="checkoutSection">
+
+        <h1>Delivery Details</h1>
+        <p class="subtitle">Where should we deliver your jewellery?</p>
+
+        <form id="addressForm">
+
+            <div class="layout">
+
+                <section class="panel">
+
+                    <h2>Customer Information</h2>
+
+                    <div class="form-grid">
+
+                        <div class="field full">
+                            <label for="customerName">Full Name *</label>
+                            <input id="customerName" type="text"
+                                placeholder="Enter your full name"
+                                required minlength="3">
+                        </div>
+
+                        <div class="field">
+                            <label for="mobile">Mobile Number *</label>
+                            <input id="mobile" type="tel"
+                                placeholder="10-digit mobile number"
+                                pattern="[6-9][0-9]{9}"
+                                maxlength="10" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email Address *</label>
+                            <input id="email" type="email"
+                                placeholder="Enter your email"
+                                required>
+                        </div>
+
+                        <div class="field full">
+                            <label for="address">House No. and Street Address *</label>
+                            <textarea id="address"
+                                placeholder="Enter your complete address"
+                                required minlength="5"></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="city">City *</label>
+                            <input id="city" type="text"
+                                placeholder="Enter your city" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="state">State *</label>
+                            <select id="state" required>
+                                <option value="">Select State</option>
+                                <option>Andhra Pradesh</option>
+                                <option>Telangana</option>
+                                <option>Karnataka</option>
+                                <option>Tamil Nadu</option>
+                                <option>Kerala</option>
+                                <option>Maharashtra</option>
+                                <option>Delhi</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="pincode">PIN Code *</label>
+                            <input id="pincode" type="text"
+                                placeholder="6-digit PIN code"
+                                pattern="[0-9]{6}"
+                                maxlength="6" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="landmark">Landmark (Optional)</label>
+                            <input id="landmark" type="text"
+                                placeholder="Nearby landmark">
+                        </div>
+
+                    </div>
+
+                    <label class="save-note">
+                        <input type="checkbox" id="saveAddress" checked>
+                        Save this address in this browser
+                    </label>
+
+                </section>
+
+                <aside class="panel summary">
+
+                    <h2>Order Summary</h2>
+
+                    <div class="product-list" id="productList"></div>
+
+                    <div class="price-row">
+                        <span>Subtotal</span>
+                        <strong id="subtotal">₹0</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>Delivery Charges</span>
+                        <strong id="delivery">FREE</strong>
+                    </div>
+
+                    <div class="price-row">
+                        <span>Discount</span>
+                        <strong id="discount">₹0</strong>
+                    </div>
+
+                    <div class="price-row total">
+                        <strong>Amount Payable</strong>
+                        <strong id="total">₹0</strong>
+                    </div>
+
+                    <button type="submit" class="place-order">
+                        CONTINUE TO PAYMENT
+                    </button>
+
+                    <a href="cart.html" class="back">← Back to Shopping Bag</a>
+
+                </aside>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+        const info = document.createElement("div");
+        info.className = "product-info";
+
+        const name = document.createElement("h3");
+        name.textContent = item.name;
+
+        const quantity = document.createElement("p");
+        quantity.textContent = "Quantity: " + (Number(item.quantity) || 1);
+
+        const price = document.createElement("div");
+        price.className = "product-price";
+        price.textContent = money(
+            Number(item.price) * (Number(item.quantity) || 1)
+        );
+
+        info.append(name, quantity);
+        product.append(img, info, price);
+        productList.appendChild(product);
+    });
+
+    const subtotal = cart.reduce(
+        (sum, item) =>
+            sum + Number(item.price) * (Number(item.quantity) || 1), 0
+    );
+
+    const savedDiscount = Number(localStorage.getItem("auraDiscount")) || 0;
+    const discount = Math.min(savedDiscount, subtotal);
+    const delivery = subtotal === 0 || subtotal >= 999 ? 0 : 49;
+    const total = subtotal - discount + delivery;
+
+    document.getElementById("subtotal").textContent = money(subtotal);
+    document.getElementById("delivery").textContent =
+        delivery === 0 ? "FREE" : money(delivery);
+    document.getElementById("discount").textContent = "-" + money(discount);
+    document.getElementById("total").textContent = money(total);
+}
+
+function loadSavedAddress() {
+    const saved = JSON.parse(localStorage.getItem("auraAddress"));
+
+    if (!saved) return;
+
+    document.getElementById("customerName").value = saved.name || "";
+    document.getElementById("mobile").value = saved.mobile || "";
+    document.getElementById("email").value = saved.email || "";
+    document.getElementById("address").value = saved.address || "";
+    document.getElementById("city").value = saved.city || "";
+    document.getElementById("state").value = saved.state || "";
+    document.getElementById("pincode").value = saved.pincode || "";
+    document.getElementById("landmark").value = saved.landmark || "";
+}
+
+document.getElementById("addressForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const cartItems = JSON.parse(localStorage.getItem("auraCart") || "[]");
+
+if (cartItems.length === 0) {
+    alert("Your shopping bag is empty.");
+    return;
+}
+
+    const customer = {
+        name: document.getElementById("customerName").value.trim(),
+        mobile: document.getElementById("mobile").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        state: document.getElementById("state").value,
+        pincode: document.getElementById("pincode").value.trim(),
+        landmark: document.getElementById("landmark").value.trim()
+    };
+
+    if (document.getElementById("saveAddress").checked) {
+        localStorage.setItem("auraAddress", JSON.stringify(customer));
+    }
+
+    localStorage.setItem("auraCheckoutAddress", JSON.stringify(customer));
+
+    localStorage.setItem("auraCheckoutCustomer", JSON.stringify(customer));
+    alert("Address saved. Opening payment page...");
+window.location.href = "payment.html";
+});
+
+showOrderSummary();
+loadSavedAddress();
+</script>
+<script>
+document.getElementById("addressForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const customer = {
+        name: document.getElementById("customerName").value.trim(),
+        mobile: document.getElementById("mobile").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        state: document.getElementById("state").value,
+        pincode: document.getElementById("pincode").value.trim(),
+        landmark: document.getElementById("landmark").value.trim()
+    };
+
+    localStorage.setItem("auraCheckoutCustomer", JSON.stringify(customer));
+    localStorage.setItem("auraCheckoutAddress", JSON.stringify(customer));
+
+    window.location.href = "payment.html";
+});
+</script>
+</body>
+</html>

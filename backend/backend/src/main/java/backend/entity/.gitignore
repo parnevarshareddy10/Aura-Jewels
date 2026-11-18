@@ -1,0 +1,13 @@
+
+# Java build files
+**/target/
+
+# IDE files
+.vscode/
+.idea/
+
+# Private database configuration
+**/application.properties
+
+# Logs
+*.log
